@@ -1,4 +1,14 @@
-from Clases.Location import Trainer
+from Clases.Location import Location
 
-class Town(Trainer):
-    pass
+class Town(Location):
+    
+    def __init__(self, name, leader):
+        super().__init__()
+        self.name = name
+        self.leader = leader
+
+    def battle_leader (self):
+        leader = self.leader
+
+    def heal_pokemon (self, pokemon):
+        pass
