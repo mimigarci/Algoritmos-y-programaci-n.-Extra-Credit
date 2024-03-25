@@ -6,6 +6,7 @@ class Town(Location):
         super().__init__()
         self.name = name
         self.leader = leader
+        self.routes = []
 
     def battle_leader (self):
         leader = self.leader
