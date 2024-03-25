@@ -6,5 +6,6 @@ class Player(Trainer):
         super().__init__(name, age)
 
         self.region = region
+        self.partner = ""
         self.pokemons = []
 
