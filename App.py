@@ -4,6 +4,9 @@ from Clases.Trainer import Trainer
 from Clases.Town import Town
 from Clases.Route import Route
 from Clases.Pokemon import Pokemon
+import pickle
+
+
 class App:
 
     def __init__(self):
@@ -11,7 +14,15 @@ class App:
         self.locations = []
         self.trainers = []
 
-    #Se debería de activar después de cada batalla
+    def read_data (self, file_name):
+        with open(f"{file_name}", "rb") as f:
+            info = pickle.load(f)
+
+            self.pokemons = info[0]
+            self.locations = info[1]
+            self.trainers = info[2]
+
+    #Aparece al entrar a una ciudad
     def save_data(self):
         pass
     
@@ -34,11 +45,11 @@ class App:
             ---> """)
                 
                 if select == "1":
-                    file_name = "Save1.pickle"
+                    App.start_game(self, "Db\Save1.pickle")
                 elif select == "2":
-                    file_name = "Save2.pickle"
+                    App.start_game(self, "Db\Save2.pickle")
                 elif select == "3":
-                    file_name = "Save3.pickle"
+                    App.start_game(self, "Db\Save3.pickle")
                 else:
                     print ("Opción inválida")
 
@@ -52,16 +63,19 @@ class App:
             ---> """)
                 
                 if select == "1":
-                    #pickle.load(Save1)
-                    pass
+                    App.read_data(self, "Db\Save1.pickle")
+                    App.start_game(self, "Db\Save1.pickle")
+                    
                 elif select == "2":
-                    #pickle.load(Save2)
-                    pass
+                    App.read_data(self, "Db\Save2.pickle")
+                    App.start_game(self, "Db\Save2.pickle")
+                    
                 elif select == "3":
-                    #pickle.load(Save3)
-                    pass
+                    App.read_data(self, "Db\Save3.pickle")
+                    App.start_game(self, "Db\Save3.pickle")
+                    
                 else:
-                    print ("Opción inválida")
+                    print ("\nOpción inválida\n")
                 
 
             elif option == "3":
@@ -69,7 +83,45 @@ class App:
             else:
                 print ("Opción inválida")
 
-        
 
-    def start (self):
-        App.menu(self)
+    def start_game(self, file_name):
+        print ("Bienvenido a tu aventura pokemon! ")
+
+        region = input ("""De qué región eres?
+    
+    1. Barinas
+    2. Barinas
+    3. Barinas
+        
+        ---> """)
+
+        if region == "1":
+            companion = self.trainers[0]
+            starter_pokemon = input ("""Seleccione un pokemon:
+        1.
+        2.
+        3.
+        
+            ---> """)
+        elif region == "2":
+            companion = self.trainers[1]
+            starter_pokemon = input ("""Seleccione un pokemon:
+        1.
+        2.
+        3.
+        
+            ---> """)
+        elif region == "3":
+            companion = self.trainers[2]
+            starter_pokemon = input ("""Seleccione un pokemon:
+        1.
+        2.
+        3.
+        
+            ---> """)
+
+        else:
+            print ("\nOpción inválida\n")
+
+
+        starter_pokemon = input ("")

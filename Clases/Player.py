@@ -8,4 +8,5 @@ class Player(Trainer):
         self.region = region
         self.partner = ""
         self.pokemons = []
+        self.location = ""
 
