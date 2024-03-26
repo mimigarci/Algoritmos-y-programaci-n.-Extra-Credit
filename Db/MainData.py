@@ -81,7 +81,11 @@ blue_town = Town("Pueblo Azul", blue_town_leader)
 purple_town = Town("Pueblo Morado", purple_town_leader)
 league = Town("Liga Pokemon", league_leader)
 
-pokemons = []
+pokemons = [pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6, pokemon7, pokemon8, pokemon9, # Opciones starter
+           pokemon10, pokemon11, # Pokemons rutas: 7, 8                                               # Pokemons rutas: 1, 2, 3, 4, 5, 6
+           pokemon12, pokemon13, # Pokemons rutas: 9, 10
+           pokemon14, pokemon15, # Pokemons rutas: 11, 12
+           pokemon16, pokemon17] # Pokemons rutas: 13, 14
 
 locations =  [route1, route2, red_town, route3, route4, orange_town, route5, route6, yellow_town, 
               route7, route8, green_town, route9, route10, blue_town,  route11, route12, purple_town, route13, route14, league]
