@@ -128,7 +128,10 @@ class App:
 
     def start (self):
         App.menu(self)
-        
+
+    def menu (self):
+        while True:
+            option = input ("""    
     1. Empezar una partida nueva
     2. Cargar partida
     3. Salir                        
