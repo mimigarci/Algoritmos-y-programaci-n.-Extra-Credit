@@ -12,3 +12,16 @@ class Town(Location):
 
     def heal_pokemon (self, pokemon):
         pass
+
+    def town_menu (self, player_location, file_name):
+        
+        choice = input (f""" Estás en el {self.name}!
+                        
+1. Sanar a mi pokemon
+2. Luchar contra el líder
+3. Moverse                        
+
+""")
+        
+        if choice == "1":
+            pass
