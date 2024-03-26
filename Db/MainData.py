@@ -8,9 +8,23 @@ import pickle
 
 
 #Pokemons:
-
-
-
+pokemon1 = Pokemon("Litten", (70,70), (98,98), (60,60), 1, ["Scratch", "Growl", "Ember"])
+pokemon2 = Pokemon("Turtwig", (83,83), (80,80), (96,96), 1, ["Tackle", "Growl", "Vine Whip"])
+pokemon3 = Pokemon("Totodile", (75,75), (98,98), (96,96), 1, ["Scratch", "Leer", "Water Gun"])
+pokemon4 = Pokemon("Charmander", (59,59), (78,78), (65,65), 1, ["Scratch", "Growl", "Ember"])
+pokemon5 = Pokemon("Rowlet", (102,102), (82,82), (82,82), 1, ["Tackle", "Growl", "Leafage"])
+pokemon6 = Pokemon("Mudkip", (75,75), (105,105), (75,75), 1, ["Tackle", "Growl", "Water Gun"])
+pokemon7 = Pokemon("Tepig", (98, 98), (95,95), (68,68), 1, ["Scratch", "Tail Whip", "Ember"])
+pokemon8 = Pokemon("Chespin", (84,84), (92,92), (98,98), 1, ["Tackle", "Growl", "Vine Whip"])
+pokemon9 = Pokemon("Squirtle", (66,66), (72,72), (98,98), 1, ["Tackle", "Tail Whip", "Water Gun"])
+pokemon10 = Pokemon("Pikachu", (75,75), (85,85), (60,60), 1, ["Spark", "Growl"])
+pokemon11 = Pokemon("Butterfree", (90,90), (93,93), (98,98), 1, ["Air Slash", "Gust"])
+pokemon12 = Pokemon("Kadabra", (65,65), (115,115), (75,75), 1, ["Psycho Cut", "Psybeam"])
+pokemon13 = Pokemon("Graveler", (83,83), (125,125), (120,120), 1, ["Bulldoze", "Defense Curl"])
+pokemon14 = Pokemon("Krookodile", (140,140), (137,137), (105,105), 1, ["Crunch", "Hone Claws", "Swagger"])
+pokemon15 = Pokemon("Ninetails", (110,110), (115,115), (131,131), 1, ["Flamethrower", "Tail Whip", "Extrasensory"])
+pokemon16 = Pokemon("Hariyama", (200,200), (120,120), (90,90), 1, ["Focus Punch", "Bulk Up", "Endure", "Force Palm"])
+pokemon17 = Pokemon("Dragonite", (136,136), (175,175), (146,146), 1, ["Dragon Rush", "Dragon Tail", "Wing Attack", "Leer"])
 
 #Rutas:
 
