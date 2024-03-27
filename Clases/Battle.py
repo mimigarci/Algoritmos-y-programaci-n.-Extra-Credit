@@ -1,5 +1,5 @@
 import random
-from Clases.Functions import Functions
+from Clases.Functions import Functions as Fun
 
 class Battle:
     def __init__(self):
@@ -37,7 +37,7 @@ class Battle:
             pokemons = []
             for p in player.pokemons:
                 pokemons.append(p.name)
-            pokemon = manage_options(pokemons)
+            pokemon = Fun.manage_options(pokemons)
             for p in player.pokemons:
                 aux = p.name
                 if aux == pokemons[pokemon-1]:
@@ -55,36 +55,48 @@ class Battle:
         e_atk = enemy_pokemon.atk[0]
 
         options = ["Luchar", "Cambiar Pokemon"]
-        option = manage_options(options)
+        option = Fun.manage_options(options)
 
         if option == 1:
             aux = []
             for m in active_pokemon.movements:
                 aux.append(f"{m.name} ({m.description})")
-            movement = manage_options(aux)
+            print("Elige qué movimiento deseas que tu pokemon haga:")
+            movement = Fun.manage_options(aux)
             for m in active_pokemon.movements:
                 aux2 = f"{m.name} ({m.description})"
                 if aux2 == aux[movement-1]:
                     if m != "Splash":
+                        print(f"Tu {active_pokemon.name} ha usado {m.name}!")
                         if m.power != None:
                             dmg = self.dmg_calc(active_pokemon.level, p_atk, e_def, m.power)
+                            print(f"Ha inflingido {dmg} puntos de daño")
                             e_hp -= dmg
                         if m.effects["debuff"] != None:
                             if m.effects["debuff"]["atk"] != None:
                                 e_atk = self.debuff_calc(e_atk, m.effects["debuff"]["atk"])
+                                print(f"Ha reducido el ataque del {enemy_pokemon.name} oponente")
                             if m.effects["debuff"]["def"] != None:
                                 e_def = self.debuff_calc(e_def, m.effects["debuff"]["def"])
+                                print(f"Ha reducido la defensa del {enemy_pokemon.name} oponente")
                         if m.effects["buff"] != None:
                             if m.effects["buff"]["atk"] != None:
                                 p_atk = self.buff_calc(p_atk, m.effects["buff"]["atk"])
+                                print(f"Ha aumentado su ataque")
                             if m.effects["buff"]["def"] != None:
                                 p_def = self.buff_calc(p_def, m.effects["buff"]["def"])
+                                print(f"Ha aumentado su defensa")
                     else:
+                        print(f"Tu {active_pokemon.name} ha usado Splash!")
                         aux3 = random.randrange(100)
                         if aux3 == 0:
+                            print(f"Wow que suerte! Ha inflingido {e_hp} puntos de daño")                            
                             e_hp -= e_hp
-                        elif aux3 in range(1,20):
+                        elif aux3 in range(1,21):
+                            print(f"Nada mal! Ha inflingido {(e_hp/2)} puntos de daño")
                             e_hp -= (e_hp/2)
+                        else:
+                            print("Parece que no hizo nada...")
         else:
             self.change_pokemon(active_pokemon, player)
 
@@ -110,27 +122,49 @@ class Battle:
 
         movement = random.randrange(len(enemy_pokemon.movements))
         m = enemy_pokemon.movements[movement]
-        if m != "Splash":    
+        
+        if m != "Splash":
+            print(f"El {enemy_pokemon.name} oponente ha usado {m.name}!")
+            
             if m.power != None:
                 dmg = self.dmg_calc(active_pokemon.level, e_atk, p_def, m.power)
+                print(f"Ha inflingido {dmg} puntos de daño")
                 p_hp -= dmg
+                
             if m.effects["debuff"] != None:
+                
                 if m.effects["debuff"]["atk"] != None:
                     p_atk = self.debuff_calc(p_atk, m.effects["debuff"]["atk"])
+                    print("Ha reducido el ataque de tu pokemon")
+                    
                 if m.effects["debuff"]["def"] != None:
                     p_def = self.debuff_calc(p_def, m.effects["debuff"]["def"])
+                    print("Ha reducido la defensa de tu pokemon")
+                    
             if m.effects["buff"] != None:
+                
                 if m.effects["buff"]["atk"] != None:
                     e_atk = self.buff_calc(e_atk, m.effects["buff"]["atk"])
+                    print("Ha aumentado su ataque")
+                    
                 if m.effects["buff"]["def"] != None:
                     e_def = self.buff_calc(e_def, m.effects["buff"]["def"])
+                    print("Ha reducido su ataque")
+                    
         else:
+            print(f"El {enemy_pokemon.name} oponente ha usado Splash!")
             aux3 = random.randrange(100)
+            
             if aux3 == 0:
+                print(f"Wow que suerte! Ha inflingido {p_hp} puntos de daño")                            
                 p_hp -= p_hp
+                
             elif aux3 in range(1,20):
+                print(f"Nada mal! Ha inflingido {(p_hp/2)} puntos de daño")
                 p_hp -= (p_hp/2)
-
+                
+            else:
+                print("Parece que no hizo nada...")
 
         hp = (p_hp, active_pokemon.HP[1])
         atk = (p_atk, active_pokemon.atk[1])
@@ -151,8 +185,10 @@ class Battle:
         pokemon.atk = (pokemon.atk[0]+aux, pokemon.atk[1]+aux)
         aux = random.randrange(3)
         pokemon.defense = (pokemon.defense[0]+aux, pokemon.defense[1]+aux)
+        
         if pokemon.lvl > 1 and not pokemon.lvl%2==0:
             pokemon.movements.append(pokemon.learnset[0])
+            print(f"{pokemon.name} ha aprendido {pokemon.learnset[0]}!")
             pokemon.learnset.pop(pokemon.learnset[0])
 
     def battle_trainer(self, player, trainer):
@@ -161,55 +197,73 @@ class Battle:
 
         while True:
             turn = random.randrange(0,2)
+            
             if turn == 0:
                 self.players_turn(active_pokemon, enemy_pokemon, player)
+                
                 if enemy_pokemon.HP[0] <= 0:
                     break           
+                    
                 self.enemy_turn(active_pokemon, enemy_pokemon)
+                
                 if active_pokemon.HP[0] <= 0:
                     self.change_pokemon(active_pokemon, player)
                     break           
+                    
             else:
                 self.enemy_turn(active_pokemon, enemy_pokemon)
+                
                 if active_pokemon.HP[0] <= 0:
                     self.change_pokemon(active_pokemon, player)
                     break 
+                    
                 self.players_turn(active_pokemon, enemy_pokemon, player)
+                
                 if enemy_pokemon.HP[0] <= 0:
                     break 
                 
         for p in trainer.pokemons:
+            
             if p.HP[0] > 0:
                 print("Has perdido la batalla")
                 return
 
         print("Has ganado la batalla")
+        
         for p in player.pokemons:
             print(f"{p.name} ha subido de nivel!")
             self.level_up(p)
 
     def battle_pokemon(self, player, enemy_pokemon):
         active_pokemon = player.pokemons[0]
+        
         while True:
             turn = random.randrange(0,2)
+            
             if turn == 0:
                 self.players_turn(active_pokemon, enemy_pokemon, player)
+                
                 if enemy_pokemon.HP[0] <= 0:
                     break           
+                    
                 self.enemy_turn(active_pokemon, enemy_pokemon)
+                
                 if active_pokemon.HP[0] <= 0:
                     self.change_pokemon(active_pokemon, player)
                     break           
+                    
             else:
                 self.enemy_turn(active_pokemon, enemy_pokemon)
+                
                 if active_pokemon.HP[0] <= 0:
                     self.change_pokemon(active_pokemon, player)
                     break 
+                    
                 self.players_turn(active_pokemon, enemy_pokemon, player)
+                
                 if enemy_pokemon.HP[0] <= 0:
                     break
 
-                
         if enemy_pokemon.HP > 0:
             print("Has perdido la batalla")
             return
