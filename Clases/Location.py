@@ -1,7 +1,7 @@
 class Location:
     
     def __init__(self):
-        battle_cleared = False
+        self.battle_cleared = False
 
     def move (self, player_location, locations_list):
         
