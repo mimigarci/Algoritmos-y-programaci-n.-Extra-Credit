@@ -9,8 +9,11 @@ class Town(Location):
         self.leader = leader
 
     def battle_leader (self, player):
-        leader = self.leader
-        self.battle_cleared = Battle.battle_trainer(player, leader)
+        if self.battle_cleared == False:
+            leader = self.leader
+            self.battle_cleared = Battle.battle_trainer(player, leader)
+        else:
+            print("Ya has ganado esta batalla!")
 
     def heal_pokemon (self, pokemon):
         pass
