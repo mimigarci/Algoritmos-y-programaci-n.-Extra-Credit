@@ -1,7 +1,7 @@
 class Location:
     
     def __init__(self):
-        battle_cleared = False
+        self.battle_cleared = False
 
 
     def foward (self, player_location, locations_list):
@@ -25,7 +25,3 @@ class Location:
             new_location = locations_list[backwards]
         except IndexError:
 
-            print ("No puedes retroceder más.")
-
-        return new_location
-    

@@ -1,7 +1,8 @@
 class Pokemon:
     
-    def __init__(self, HP, defense, atk, level, movements):
-        
+    def __init__(self, name, HP, defense, atk, level, movements):
+
+        self.name = name
         self.HP = HP
         self.defense = defense
         self.atk = atk
