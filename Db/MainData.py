@@ -372,6 +372,7 @@ movements = [
         },
     ]
 
+
 for m in movements:
            moves.append(Movement(m["name"], m["description"], m["power"], m["effect"]))
 
@@ -393,6 +394,25 @@ pokemon14 = Pokemon("Krookodile", (140,140), (137,137), (105,105), 1, ["Crunch",
 pokemon15 = Pokemon("Ninetails", (110,110), (115,115), (131,131), 1, ["Flamethrower", "Tail Whip", "Extrasensory"], ["Fire Fang", "Splash"])
 pokemon16 = Pokemon("Hariyama", (200,200), (120,120), (90,90), 1, ["Focus Punch", "Bulk Up", "Endure", "Force Palm"], ["Splash"])
 pokemon17 = Pokemon("Dragonite", (136,136), (175,175), (146,146), 1, ["Dragon Rush", "Dragon Tail", "Wing Attack", "Leer"], ["Splash"])
+=======
+#Pokemons:
+pokemon1 = Pokemon("Litten", (70,70), (98,98), (60,60), 1, ["Scratch", "Growl", "Ember"])
+pokemon2 = Pokemon("Turtwig", (83,83), (80,80), (96,96), 1, ["Tackle", "Growl", "Vine Whip"])
+pokemon3 = Pokemon("Totodile", (75,75), (98,98), (96,96), 1, ["Scratch", "Leer", "Water Gun"])
+pokemon4 = Pokemon("Charmander", (59,59), (78,78), (65,65), 1, ["Scratch", "Growl", "Ember"])
+pokemon5 = Pokemon("Rowlet", (102,102), (82,82), (82,82), 1, ["Tackle", "Growl", "Vine Whip"])
+pokemon6 = Pokemon("Mudkip", (75,75), (105,105), (75,75), 1, ["Tackle", "Growl", "Water Gun"])
+pokemon7 = Pokemon("Tepig", (98, 98), (95,95), (68,68), 1, ["Scratch", "Tail Whip", "Ember"])
+pokemon8 = Pokemon("Chespin", (84,84), (92,92), (98,98), 1, ["Tackle", "Growl", "Vine Whip"])
+pokemon9 = Pokemon("Squirtle", (66,66), (72,72), (98,98), 1, ["Tackle", "Tail Whip", "Water Gun"])
+pokemon10 = Pokemon("Pikachu", (75,75), (85,85), (60,60), 1, ["Spark", "Growl"])
+pokemon11 = Pokemon("Butterfree", (90,90), (93,93), (98,98), 1, ["Air Slash", "Gust"])
+pokemon12 = Pokemon("Kadabra", (65,65), (115,115), (75,75), 1, ["Psycho Cut", "Psybeam"])
+pokemon13 = Pokemon("Graveler", (83,83), (125,125), (120,120), 1, ["Bulldoze", "Defense Curl"])
+pokemon14 = Pokemon("Krookodile", (140,140), (137,137), (105,105), 1, ["Crunch", "Hone Claws", "Swagger"])
+pokemon15 = Pokemon("Ninetails", (110,110), (115,115), (131,131), 1, ["Flamethrower", "Tail Whip", "Extrasensory"])
+pokemon16 = Pokemon("Hariyama", (200,200), (120,120), (90,90), 1, ["Focus Punch", "Bulk Up", "Endure", "Force Palm"])
+pokemon17 = Pokemon("Dragonite", (136,136), (175,175), (146,146), 1, ["Dragon Rush", "Dragon Tail", "Wing Attack", "Leer"])
 
 #Rutas:
 
@@ -449,8 +469,12 @@ blue_town = Town("Pueblo Azul", blue_town_leader)
 purple_town = Town("Pueblo Morado", purple_town_leader)
 league = Town("Liga Pokemon", league_leader)
 
-pokemons = [pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6, pokemon7, pokemon8, pokemon9, # Opciones starter
-           pokemon10, pokemon11, # Pokemons rutas: 7, 8                                               # Pokemons rutas: 1, 2, 3, 4, 5, 6
+
+pokemons = [pokemon1, pokemon2, pokemon3, # Opciones starter
+            pokemon4, pokemon5, # Pokemons rutas: 1, 2  
+            pokemon6, pokemon7, # Pokemons rutas: 3, 4
+            pokemon8, pokemon9, # Pokemons rutas: 5, 6  
+           pokemon10, pokemon11, # Pokemons rutas: 7, 8                                         
            pokemon12, pokemon13, # Pokemons rutas: 9, 10
            pokemon14, pokemon15, # Pokemons rutas: 11, 12
            pokemon16, pokemon17] # Pokemons rutas: 13, 14
@@ -458,9 +482,7 @@ pokemons = [pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6, pokemon7
 locations =  [route1, route2, red_town, route3, route4, orange_town, route5, route6, yellow_town, 
               route7, route8, green_town, route9, route10, blue_town,  route11, route12, purple_town, route13, route14, league]
 
-trainers = [comp_region1, comp_region2, comp_region3, 
-            red_town_leader, orange_town_leader, yellow_town_leader, 
-            green_town_leader, blue_town_leader, purple_town_leader, league_leader]
+trainers = [comp_region1, comp_region2, comp_region3, league_leader]
 
 main_data = [pokemons, locations, trainers]
 

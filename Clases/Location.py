@@ -3,20 +3,25 @@ class Location:
     def __init__(self):
         self.battle_cleared = False
 
-    def move (self, player_location, locations_list):
-        
-        choice = input ("""
-    1. Avanzar
-    2. Retroceder
-        
-    ---> """)
-        
-        if choice == "1":
-            pass
-        elif choice == "2":
-            pass
-        else:
-            print ("\nOpción inválida\n")
 
-    def foward (self, locations_list):
-        pass
+    def foward (self, player_location, locations_list):
+        
+        location = locations_list.index(player_location)
+        foward = location +1
+        try:
+            new_location = locations_list[foward]
+        except IndexError:
+            print ("No puedes avanzar más.")
+
+        return new_location
+
+    
+    def backwards (self, player_location, locations_list):
+        
+        location = locations_list.index(player_location)
+        backwards = location -1
+
+        try:
+            new_location = locations_list[backwards]
+        except IndexError:
+

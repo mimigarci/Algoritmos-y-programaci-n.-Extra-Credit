@@ -6,13 +6,13 @@ from Clases.Route import Route
 from Clases.Pokemon import Pokemon
 import pickle
 
-
 class App:
 
     def __init__(self):
         self.pokemons = []
         self.locations = []
         self.trainers = []
+        self.player = ""
 
     def read_data (self, file_name):
         with open(f"{file_name}", "rb") as f:
@@ -85,43 +85,111 @@ class App:
 
 
     def start_game(self, file_name):
-        print ("Bienvenido a tu aventura pokemon! ")
+        while True:
+            print ("Bienvenido a tu aventura pokemon! ")
 
-        region = input ("""De qué región eres?
-    
-    1. Barinas
-    2. Barinas
-    3. Barinas
+            region = input ("""De qué región eres?
         
-        ---> """)
-
-        if region == "1":
-            companion = self.trainers[0]
-            starter_pokemon = input ("""Seleccione un pokemon:
-        1.
-        2.
-        3.
-        
-            ---> """)
-        elif region == "2":
-            companion = self.trainers[1]
-            starter_pokemon = input ("""Seleccione un pokemon:
-        1.
-        2.
-        3.
-        
-            ---> """)
-        elif region == "3":
-            companion = self.trainers[2]
-            starter_pokemon = input ("""Seleccione un pokemon:
-        1.
-        2.
-        3.
-        
+        1. Barinas
+        2. Maracaibo
+        3. Zona en reclamación
+            
             ---> """)
 
+            if region == "1":
+                companion = self.trainers[0]
+                pokemon1 = self.pokemons[0]
+                pokemon2 = self.pokemons[1]
+                pokemon3 = self.pokemons[2]
+
+                selected_pokemon = App.select_pokemon(self, pokemon1, pokemon2, pokemon3)
+
+                print (f"Tu compañero es {companion} y tu pokemon inicial es {selected_pokemon.name}!")
+                print ("Ya puedes iniciar tu aventura! ")
+
+                #Debería colocar otro ciclo acá o funcionará bien así??
+                first_battle = input ("Estás listo para tu primera batalla? (Y/N)")
+                if first_battle == "Y" or first_battle == "y":
+                    #Si pasa la primera batalla:
+
+                    location = self.locations[0]
+                    pass
+                    
+                elif first_battle == "N" or first_battle == "n":
+                    pass
+
+                else:
+                    print ("Opción inválida")
+
+
+            elif region == "2":
+                companion = self.trainers[1]
+                pokemon4 = self.pokemons[3]
+                pokemon5 = self.pokemons[4]
+                pokemon6 = self.pokemons[5]
+
+                selected_pokemon = App.select_pokemon(self, pokemon4, pokemon5, pokemon6)
+
+                print (f"Tu compañero es {companion} y tu pokemon inicial es {selected_pokemon.name}!")
+                print ("Ya puedes iniciar tu aventura! ")
+                break
+            
+
+            elif region == "3":
+                companion = self.trainers[2]
+                pokemon7 = self.pokemons[6]
+                pokemon8 = self.pokemons[7]
+                pokemon9 = self.pokemons[8]
+
+                selected_pokemon = App.select_pokemon(self, pokemon7, pokemon8, pokemon9)
+
+                print (f"Tu compañero es {companion} y tu pokemon inicial es {selected_pokemon.name}!")
+                print ("Ya puedes iniciar tu aventura! ")
+                break
+            else:
+                print ("\nOpción inválida\n")
+
+
+
+    def start (self):
+        App.menu(self)
+
+    def select_pokemon (self, pokemon1, pokemon2, pokemon3):
+        while True:
+            starter_pokemon = input (f"""Seleccione un pokemon:
+                1.{pokemon1.name}
+                2.{pokemon2.name}
+                3.{pokemon3.name}
+                
+                    ---> """)
+
+            if starter_pokemon == "1":
+                return pokemon1
+            elif starter_pokemon == "2":
+                return pokemon2
+            elif starter_pokemon == "3":
+                return pokemon3
+            else:
+                print ("\nOpción inválida\n")
+
+    def unlocked_towns_menu (self):
+        unlocked_towns = []
+        registered_locations = len(self.locations)
+
+        if registered_locations > 0:
+            for i in self.locations:
+                registered_locations -= 1
+                if type(i) == Town:
+                    if i.battle_cleared == True:
+                        unlocked_towns.append(i)
+                    else:
+                        continue
+                else:
+                    continue
         else:
-            print ("\nOpción inválida\n")
+            print ("No hay pueblos desbloqueados. Debe ingresar a una ruta para llegar a uno.")
+
+        return unlocked_towns
 
 
-        starter_pokemon = input ("")
+
