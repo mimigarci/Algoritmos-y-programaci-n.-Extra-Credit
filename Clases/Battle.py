@@ -266,9 +266,10 @@ class Battle:
 
         if enemy_pokemon.HP > 0:
             print("Has perdido la batalla")
-            return
+            return False
 
         print("Has ganado la batalla")
         for p in player.pokemons:
             print(f"{p.name} ha subido de nivel!")
             self.level_up(p)
+        return True
