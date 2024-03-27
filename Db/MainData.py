@@ -394,7 +394,9 @@ pokemon14 = Pokemon("Krookodile", (140,140), (137,137), (105,105), 1, ["Crunch",
 pokemon15 = Pokemon("Ninetails", (110,110), (115,115), (131,131), 1, ["Flamethrower", "Tail Whip", "Extrasensory"], ["Fire Fang", "Splash"])
 pokemon16 = Pokemon("Hariyama", (200,200), (120,120), (90,90), 1, ["Focus Punch", "Bulk Up", "Endure", "Force Palm"], ["Splash"])
 pokemon17 = Pokemon("Dragonite", (136,136), (175,175), (146,146), 1, ["Dragon Rush", "Dragon Tail", "Wing Attack", "Leer"], ["Splash"])
-=======
+
+
+
 #Pokemons:
 pokemon1 = Pokemon("Litten", (70,70), (98,98), (60,60), 1, ["Scratch", "Growl", "Ember"])
 pokemon2 = Pokemon("Turtwig", (83,83), (80,80), (96,96), 1, ["Tackle", "Growl", "Vine Whip"])
@@ -417,32 +419,32 @@ pokemon17 = Pokemon("Dragonite", (136,136), (175,175), (146,146), 1, ["Dragon Ru
 #Rutas:
 
 #Pueblo Rojo
-route1 = Route(1, )
-route2 = Route(2, )
+route1 = Route(1, pokemon4)
+route2 = Route(2, pokemon5)
 
 #Pueblo Naranja
-route3 = Route(3, )
-route4 = Route(4, )
+route3 = Route(3, pokemon6)
+route4 = Route(4, pokemon7)
 
 #Pueblo Amarillo
-route5 = Route(5, )
-route6 = Route(6, )
+route5 = Route(5, pokemon8)
+route6 = Route(6, pokemon9)
 
 #Pueblo Verde
-route7 = Route(7, )
-route8 = Route(8, )
+route7 = Route(7, pokemon10)
+route8 = Route(8, pokemon11)
 
 #Pueblo Azul
-route9 = Route(9, )
-route10 = Route(10, )
+route9 = Route(9, pokemon12)
+route10 = Route(10, pokemon13)
 
 #Pueblo Morado
-route11 = Route(11, )
-route12 = Route(12, )
+route11 = Route(11, pokemon14)
+route12 = Route(12, pokemon15)
 
 #Liga Pokemon
-route13 = Route(13, )
-route14 = Route(14, )
+route13 = Route(13, pokemon16)
+route14 = Route(14, pokemon17)
 
 #Líderes:
 
