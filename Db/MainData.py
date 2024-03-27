@@ -4,6 +4,7 @@ from Clases.Trainer import Trainer
 from Clases.Town import Town
 from Clases.Route import Route
 from Clases.Pokemon import Pokemon
+from Clases.Movement import Movement
 import pickle
 
 #Moves
