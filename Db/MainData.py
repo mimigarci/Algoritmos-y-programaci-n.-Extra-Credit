@@ -482,7 +482,8 @@ pokemons = [pokemon1, pokemon2, pokemon3, # Opciones starter
            pokemon16, pokemon17] # Pokemons rutas: 13, 14
 
 locations =  [route1, route2, red_town, route3, route4, orange_town, route5, route6, yellow_town, 
-              route7, route8, green_town, route9, route10, blue_town,  route11, route12, purple_town, route13, route14, league]
+              route7, route8, green_town, route9, route10, blue_town,  route11, route12, 
+              purple_town, route13, route14, league]
 
 trainers = [comp_region1, comp_region2, comp_region3, league_leader]
 

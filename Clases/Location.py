@@ -27,6 +27,8 @@ class Location (Functions):
         foward = location +1
         try:
             new_location = locations_list[foward]
+            player_location.location = new_location
+
         except IndexError:
             print ("No puedes avanzar más.")
 
@@ -40,7 +42,9 @@ class Location (Functions):
 
         try:
             new_location = locations_list[backwards]
+            player_location.location = new_location
+            
         except IndexError:
-             print ("No puedes avanzar más.")
+            print ("No puedes retroceder más.")
 
         return new_location
