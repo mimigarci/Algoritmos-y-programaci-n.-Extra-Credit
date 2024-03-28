@@ -5,6 +5,7 @@ from Clases.Town import Town
 from Clases.Route import Route
 from Clases.Pokemon import Pokemon
 from Clases.Battle import Battle
+from Clases.Functions import Functions as Fun
 import pickle
 
 class App:
@@ -29,39 +30,26 @@ class App:
     
     def menu (self):
         while True:
-            option = input ("""
-
-    1. Empezar una partida nueva
-    2. Cargar partida
-    3. Salir                        
-
-    ---> """)
-            if option == "1":
-
-                select = input("""
-        1. Guardado 1
-        2. Guardado 2
-        3. Guardado 3
             
-            ---> """)
+            options = ["Empezar una partida nueva", "Cargar Partida", "Salir"]
+            option = Fun.manage_options(options)
+            
+            if option == "1":
+                
+                saves = ["Guardado 1", "Guardado 2", "Guardado 3"]
+                select = Fun.manage_options(saves)
                 
                 if select == "1":
                     App.start_game(self, "Db\Save1.pickle")
                 elif select == "2":
                     App.start_game(self, "Db\Save2.pickle")
-                elif select == "3":
+                else select == "3":
                     App.start_game(self, "Db\Save3.pickle")
-                else:
-                    print ("Opción inválida")
 
             elif option == "2":
                 
-                select = input("""
-        1. Guardado 1
-        2. Guardado 2
-        3. Guardado 3
-            
-            ---> """)
+                saves = ["Guardado 1", "Guardado 2", "Guardado 3"]
+                select = Fun.manage_options(saves)
                 
                 if select == "1":
                     App.read_data(self, "Db\Save1.pickle")
@@ -71,18 +59,12 @@ class App:
                     App.read_data(self, "Db\Save2.pickle")
                     App.start_game(self, "Db\Save2.pickle")
                     
-                elif select == "3":
+                else:
                     App.read_data(self, "Db\Save3.pickle")
                     App.start_game(self, "Db\Save3.pickle")
-                    
-                else:
-                    print ("\nOpción inválida\n")
                 
-
-            elif option == "3":
-                break
             else:
-                print ("Opción inválida")
+                break
 
 
     def start_game(self, file_name):
@@ -91,13 +73,10 @@ class App:
 
             name = input ("\n¿Cuál es tu nombre? ")
             age = input ("\nEdad: ")
-            region = input ("""\nDe qué región eres?
-        
-        1. Barinas
-        2. Maracaibo
-        3. Zona en reclamación
-            
-            ---> """)
+            while not age.isnumeric():
+                age = input("\nEsa no puede ser tu edad! Edad (en números): ")
+            regiones = ["Barinas", "Maracaibo", "Zona en Reclamación"]
+            region = Fun.manage_options(regiones)
 
             if region == "1":
                 partner = self.trainers[0]
