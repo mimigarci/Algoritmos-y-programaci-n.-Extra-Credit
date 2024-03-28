@@ -1,6 +1,6 @@
 from Clases.Location import Location
 from Clases.Battle import Battle as Battle
-from Clases.Functions import Funtions as Fun
+from Clases.Functions import Functions as Fun
 
 class Town(Location):
     
@@ -8,13 +8,6 @@ class Town(Location):
         super().__init__()
         self.name = name
         self.leader = leader
-
-    def battle_leader (self, player):
-        if self.battle_cleared == False:
-            leader = self.leader
-            self.battle_cleared = Battle.battle_trainer(player, leader)
-        else:
-            print("Ya has ganado esta batalla!")
 
     def heal_pokemon (self, player):
         
@@ -47,3 +40,48 @@ class Town(Location):
 
         else:
             print ("\nOpción inválida\n")
+
+    def battle_oponent (self, player, oponent, location_list):
+
+        player = self.player
+        location = self.player.location
+
+        print (f"Tu batalla es contra {oponent.name}")
+
+        if self.battle_cleared == False:
+            leader = self.leader
+            self.battle_cleared = Battle.battle_trainer(player, leader)
+
+            if self.battle_cleared == True:
+                print ("\nFelicidades, has derrotado a tu oponente! Puedes acceder a la próxima zona.\n")
+                self.move(location, location_list)
+                player.towns = player.unlocked_towns(location_list)
+
+            else:
+                print ("\nLo lamento, no has derrotado a tu oponente. Puedes sanar a tu pokemon en el pueblo más cercano.\n")
+            
+                if len(player.unlocked_towns) > 0:
+                    print ("Debes ir al pueblo más cercano para sanar a tu pokemon.")
+
+                    unlocked_towns = []
+                    for i in player.unlocked_towns:
+                        unlocked_towns.append(i.name)
+
+                    selected_town = Fun.manage_options(unlocked_towns)
+
+                    for i in location_list:
+                        if location_list.index(i) == selected_town+1:
+                            i.town_menu
+                            player.location = i
+                        else:
+                            continue
+                else:
+                    print ("No has llegado a ningún pueblo, vamos a sanar a tu pokemon para que lo vuelvas a intentar!")
+                    Town.heal_pokemon(self, player)
+
+        else:
+            print("Ya has ganado esta batalla!")
+            
+
+
+           

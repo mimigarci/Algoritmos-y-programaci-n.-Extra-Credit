@@ -31,56 +31,51 @@ class App:
     
     def menu (self):
         while True:
-            option = input ("""
-
-    1. Empezar una partida nueva
-    2. Cargar partida
-    3. Salir                        
-
-    ---> """)
-            if option == "1":
-                App.read_data(self, "Db\Database.pickle")
-                select = input("""
-        1. Guardado 1
-        2. Guardado 2
-        3. Guardado 3
             
             options = ["Empezar una partida nueva", "Cargar Partida", "Salir"]
             option = Fun.manage_options(options)
             
-            if option == "1":
+            if option == 1:
                 
                 saves = ["Guardado 1", "Guardado 2", "Guardado 3"]
                 select = Fun.manage_options(saves)
                 
-                if select == "1":
-                    App.start_game(self, "Db\Save1.pickle")
-                elif select == "2":
-                    App.start_game(self, "Db\Save2.pickle")
-                else select == "3":
-                    App.start_game(self, "Db\Save3.pickle")
+                App.read_data(self, "Db\Database.pickle")
 
-            elif option == "2":
+                if select == 1:
+                    App.start_game(self, "Db\Save1.pickle")
+                    break
+                elif select == 2:
+                    App.start_game(self, "Db\Save2.pickle")
+                    break
+                elif select == 3:
+                    App.start_game(self, "Db\Save3.pickle")
+                    break
+                else:
+                    pass
+
+            elif option == 2:
                 
                 saves = ["Guardado 1", "Guardado 2", "Guardado 3"]
                 select = Fun.manage_options(saves)
                 
-                if select == "1":
+                if select == 1:
                     App.start_game(self, "Db\Save1.pickle")
-                elif select == "2":
+                    break
+                elif select == 2:
                     App.start_game(self, "Db\Save2.pickle")
-                elif select == "3":
+                    break
+                elif select == 3:
                     App.start_game(self, "Db\Save3.pickle")
+                    break
                 else:
                     print ("\nOpción inválida\n")
                     
-                else:
-                    App.read_data(self, "Db\Save3.pickle")
-                    App.start_game(self, "Db\Save3.pickle")
-
-                
-            else:
+            elif option == 3:
                 break
+            
+            else:
+                print ("\nOpción inválida\n")
 
 
     def start_game(self, file_name):
@@ -170,54 +165,4 @@ class App:
                 print ("\nOpción inválida\n")
 
 
-    def unlocked_towns_menu (self):
-        unlocked_towns = []
-        registered_locations = len(self.locations)
-
-        if registered_locations > 0:
-            for i in self.locations:
-                registered_locations -= 1
-                if type(i) == Town:
-                    if i.battle_cleared == True:
-                        unlocked_towns.append(i)
-                    else:
-                        continue
-                else:
-                    continue
-        else:
-            print ("No hay pueblos desbloqueados. Debe ingresar a una ruta para llegar a uno.")
-
-        return unlocked_towns
-
-
-    def battle_menu (self, oponent):
-
-        #Menu general para cada batalla
-        player = self.player
-        location = self.player.location
-        location_list = self.locations
-
-        print (f"Tu batalla es contra {oponent.name}")
-        
-        #Si ganas la batalla
-        if Battle.battle_trainer(self, player, oponent) == True:
-            #Mensaje de zona desbloqueada
-            print ("\nFelicidades, has derrotado a tu oponente! Puedes acceder a la próxima zona.\n")
-            Town.move(self, location, location_list)
-        
-        #Si pierdes la batalla
-
-        if Battle.battle_trainer(self, player, oponent) == True:
-            print ("\nFelicidades, has derrotado a tu oponente! Puedes acceder a la próxima zona.\n")
-            Town.move(self, location, location_list)
-
-        else:
-            print ("\nLo lamento, no has derrotado a tu oponente. Puedes sanar a tu pokemon en el pueblo más cercano.\n")
-            
-            if len(App.unlocked_towns_menu(self)) > 0:
-                print (App.unlocked_towns_menu(self))
-
-            else:
-                print ("No has llegado a ningún pueblo, vamos a sanar a tu pokemon para que lo vuelvas a intentar!")
-                Town.heal_pokemon(self, player)
-
+    
