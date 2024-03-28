@@ -280,7 +280,7 @@ class Battle:
                 if enemy_pokemon.HP[0] <= 0:
                     break
 
-        if enemy_pokemon.HP > 0:
+        if enemy_pokemon.HP[0] > 0:
             print("Has perdido la batalla")
             return False
 

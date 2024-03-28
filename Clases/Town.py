@@ -72,13 +72,6 @@ class Town(Location):
 
             else:
                 print ("\nLo lamento, no has derrotado a tu oponente. Puedes sanar a tu pokemon en el pueblo más cercano.\n")
-<<<<<<< Updated upstream
-            
-                if len(player.towns) > 0:
-                    print ("Debes ir al pueblo más cercano para sanar a tu pokemon.")
-=======
->>>>>>> Stashed changes
-
                 unlocked_towns = player.unlocked_towns (location_list)
 
                 if len(unlocked_towns) > 0:
