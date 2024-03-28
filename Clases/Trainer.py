@@ -5,3 +5,5 @@ class Trainer:
         self.name = name
         self.age = age
         self.pokemons = []
+
+    
