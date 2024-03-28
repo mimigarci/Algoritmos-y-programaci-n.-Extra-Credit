@@ -17,7 +17,7 @@ class Route(Location):
                 aux = random.randrange(4)
                 if aux in range(3):
                     self.battle_cleared = Battle.battle_pokemon(player, self.wild_pokemon)
-            elif self.numer in range(9, 13)
+            elif self.numer in range(9, 13):
                 aux = random.randrange(2)
                 if aux == 0:
                     self.battle_cleared = Battle.battle_pokemon(player, self.wild_pokemon)

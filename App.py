@@ -5,6 +5,7 @@ from Clases.Town import Town
 from Clases.Route import Route
 from Clases.Pokemon import Pokemon
 from Clases.Battle import Battle
+from Clases.Functions import Functions as Fun
 import pickle
 
 class App:
@@ -44,25 +45,25 @@ class App:
         2. Guardado 2
         3. Guardado 3
             
-            ---> """)
+            options = ["Empezar una partida nueva", "Cargar Partida", "Salir"]
+            option = Fun.manage_options(options)
+            
+            if option == "1":
+                
+                saves = ["Guardado 1", "Guardado 2", "Guardado 3"]
+                select = Fun.manage_options(saves)
                 
                 if select == "1":
                     App.start_game(self, "Db\Save1.pickle")
                 elif select == "2":
                     App.start_game(self, "Db\Save2.pickle")
-                elif select == "3":
+                else select == "3":
                     App.start_game(self, "Db\Save3.pickle")
-                else:
-                    print ("Opción inválida")
 
             elif option == "2":
                 
-                select = input("""
-        1. Guardado 1
-        2. Guardado 2
-        3. Guardado 3
-            
-            ---> """)
+                saves = ["Guardado 1", "Guardado 2", "Guardado 3"]
+                select = Fun.manage_options(saves)
                 
                 if select == "1":
                     App.start_game(self, "Db\Save1.pickle")
@@ -72,12 +73,14 @@ class App:
                     App.start_game(self, "Db\Save3.pickle")
                 else:
                     print ("\nOpción inválida\n")
-                
+                    
+                else:
+                    App.read_data(self, "Db\Save3.pickle")
+                    App.start_game(self, "Db\Save3.pickle")
 
-            elif option == "3":
-                break
+                
             else:
-                print ("Opción inválida")
+                break
 
 
     def start_game(self, file_name):
@@ -86,71 +89,67 @@ class App:
         while True:
             print ("Bienvenido a tu aventura pokemon! ")
 
-            region = input ("""De qué región eres?
-        
-        1. Barinas
-        2. Maracaibo
-        3. Zona en reclamación
-            
-            ---> """)
+            name = input ("\n¿Cuál es tu nombre? ")
+            age = input ("\nEdad: ")
+            while not age.isnumeric():
+                age = input("\nEsa no puede ser tu edad! Edad (en números): ")
+            regiones = ["Barinas", "Maracaibo", "Zona en Reclamación"]
+            region = Fun.manage_options(regiones)
 
             if region == "1":
-                companion = self.trainers[0]
+                partner = self.trainers[0]
                 pokemon1 = self.pokemons[0]
                 pokemon2 = self.pokemons[1]
                 pokemon3 = self.pokemons[2]
 
                 selected_pokemon = App.select_pokemon(self, pokemon1, pokemon2, pokemon3)
 
-                print (f"Tu compañero es {companion} y tu pokemon inicial es {selected_pokemon.name}!")
-                print ("Ya puedes iniciar tu aventura! ")
+                print (f"Tu compañero es {partner} y tu pokemon inicial es {selected_pokemon.name}!")
 
-                #Debería colocar otro ciclo acá o funcionará bien así??
-                first_battle = input ("Estás listo para tu primera batalla? (Y/N)")
-                if first_battle == "Y" or first_battle == "y":
-                    #Si pasa la primera batalla:
+                player = Player(name, age, region, partner)
+                player.location = self.locations[0]
 
-                    location = self.locations[0]
-                    pass
-                    
-                elif first_battle == "N" or first_battle == "n":
-                    pass
-
-                else:
-                    print ("Opción inválida")
+                print ("\n...Comienza la aventura! ")
 
 
             elif region == "2":
-                companion = self.trainers[1]
+                partner = self.trainers[1]
                 pokemon4 = self.pokemons[3]
                 pokemon5 = self.pokemons[4]
                 pokemon6 = self.pokemons[5]
 
                 selected_pokemon = App.select_pokemon(self, pokemon4, pokemon5, pokemon6)
 
-                print (f"Tu compañero es {companion} y tu pokemon inicial es {selected_pokemon.name}!")
-                print ("Ya puedes iniciar tu aventura! ")
+                print (f"Tu compañero es {partner} y tu pokemon inicial es {selected_pokemon.name}!")
+
+                player = Player(name, age, region, partner)
+                player.location = self.locations[0]
+
+                print ("\n...Comienza la aventura! ")
+
                 break
             
 
             elif region == "3":
-                companion = self.trainers[2]
+                partner = self.trainers[2]
                 pokemon7 = self.pokemons[6]
                 pokemon8 = self.pokemons[7]
                 pokemon9 = self.pokemons[8]
 
                 selected_pokemon = App.select_pokemon(self, pokemon7, pokemon8, pokemon9)
 
-                print (f"Tu compañero es {companion} y tu pokemon inicial es {selected_pokemon.name}!")
-                print ("Ya puedes iniciar tu aventura! ")
+                print (f"Tu compañero es {partner} y tu pokemon inicial es {selected_pokemon.name}!")
+
+                player = Player(name, age, region, partner)
+                player.location = self.locations[0]
+
+                print ("\n...Comienza la aventura! ")
+
                 break
             else:
                 print ("\nOpción inválida\n")
 
 
-
-    def start (self):
-        App.menu(self)
 
     def select_pokemon (self, pokemon1, pokemon2, pokemon3):
         while True:
@@ -169,6 +168,7 @@ class App:
                 return pokemon3
             else:
                 print ("\nOpción inválida\n")
+
 
     def unlocked_towns_menu (self):
         unlocked_towns = []
@@ -191,13 +191,14 @@ class App:
 
 
     def battle_menu (self, oponent):
-        #Menu general para cada batalla
 
+        #Menu general para cada batalla
         player = self.player
         location = self.player.location
         location_list = self.locations
 
         print (f"Tu batalla es contra {oponent.name}")
+        
         #Si ganas la batalla
         if Battle.battle_trainer(self, player, oponent) == True:
             #Mensaje de zona desbloqueada
@@ -205,6 +206,11 @@ class App:
             Town.move(self, location, location_list)
         
         #Si pierdes la batalla
+
+        if Battle.battle_trainer(self, player, oponent) == True:
+            print ("\nFelicidades, has derrotado a tu oponente! Puedes acceder a la próxima zona.\n")
+            Town.move(self, location, location_list)
+
         else:
             print ("\nLo lamento, no has derrotado a tu oponente. Puedes sanar a tu pokemon en el pueblo más cercano.\n")
             

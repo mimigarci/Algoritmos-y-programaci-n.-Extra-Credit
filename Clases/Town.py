@@ -1,5 +1,6 @@
 from Clases.Location import Location
 from Clases.Battle import Battle as Battle
+from Clases.Functions import Funtions as Fun
 
 class Town(Location):
     
@@ -22,22 +23,15 @@ class Town(Location):
         pokemon_to_heal = input ("Pokemon que desea sanar: ")
 
         for i in player.pokemons:
-            if pokemon_to_heal == player.pokemons.index(i)+1 and i.HP[1] < 100:
-                #Sanar pokemon
-                pass
+            if pokemon_to_heal == player.pokemons.index(i)+1 and i.HP[0] < i.HP[1]:
+                i.HP = (i.HP[1], i.HP[1])
             else:
                 continue
         
     def town_menu (self, player, locations_list):
-        
-        choice = input (f""" Estás en el {self.name}!
-                        
-1. Sanar a mi pokemon
-2. Luchar contra el líder
-3. Avanzar
-4. Retroceder                        
 
-""")
+        options = ["Sanar a mi pokemon", "Luchar contra el líder", "Avanzar", "Retroceder"]
+        choice = Fun.manage_options(options)
         
         if choice == "1":
             Town.heal_pokemon(self, player)
