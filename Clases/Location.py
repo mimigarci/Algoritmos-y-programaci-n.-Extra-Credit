@@ -1,4 +1,5 @@
-class Location:
+from Clases.Functions import Functions 
+class Location (Functions):
     
     def __init__(self):
         self.battle_cleared = False
@@ -24,4 +25,5 @@ class Location:
         try:
             new_location = locations_list[backwards]
         except IndexError:
+             print ("No puedes avanzar más.")
 

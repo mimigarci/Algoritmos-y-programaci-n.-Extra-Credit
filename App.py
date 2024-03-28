@@ -4,6 +4,7 @@ from Clases.Trainer import Trainer
 from Clases.Town import Town
 from Clases.Route import Route
 from Clases.Pokemon import Pokemon
+from Clases.Battle import Battle
 import pickle
 
 class App:
@@ -13,6 +14,7 @@ class App:
         self.locations = []
         self.trainers = []
         self.player = ""
+
 
     def read_data (self, file_name):
         with open(f"{file_name}", "rb") as f:
@@ -36,7 +38,7 @@ class App:
 
     ---> """)
             if option == "1":
-
+                App.read_data(self, "Db\Database.pickle")
                 select = input("""
         1. Guardado 1
         2. Guardado 2
@@ -63,17 +65,11 @@ class App:
             ---> """)
                 
                 if select == "1":
-                    App.read_data(self, "Db\Save1.pickle")
                     App.start_game(self, "Db\Save1.pickle")
-                    
                 elif select == "2":
-                    App.read_data(self, "Db\Save2.pickle")
                     App.start_game(self, "Db\Save2.pickle")
-                    
                 elif select == "3":
-                    App.read_data(self, "Db\Save3.pickle")
                     App.start_game(self, "Db\Save3.pickle")
-                    
                 else:
                     print ("\nOpción inválida\n")
                 
@@ -85,6 +81,8 @@ class App:
 
 
     def start_game(self, file_name):
+        App.read_data(self, file_name)
+
         while True:
             print ("Bienvenido a tu aventura pokemon! ")
 
@@ -192,4 +190,28 @@ class App:
         return unlocked_towns
 
 
+    def battle_menu (self, oponent):
+        #Menu general para cada batalla
+
+        player = self.player
+        location = self.player.location
+        location_list = self.locations
+
+        print (f"Tu batalla es contra {oponent.name}")
+        #Si ganas la batalla
+        if Battle.battle_trainer(self, player, oponent) == True:
+            #Mensaje de zona desbloqueada
+            print ("\nFelicidades, has derrotado a tu oponente! Puedes acceder a la próxima zona.\n")
+            Town.move(self, location, location_list)
+        
+        #Si pierdes la batalla
+        else:
+            print ("\nLo lamento, no has derrotado a tu oponente. Puedes sanar a tu pokemon en el pueblo más cercano.\n")
+            
+            if len(App.unlocked_towns_menu(self)) > 0:
+                print (App.unlocked_towns_menu(self))
+
+            else:
+                print ("No has llegado a ningún pueblo, vamos a sanar a tu pokemon para que lo vuelvas a intentar!")
+                Town.heal_pokemon(self, player)
 

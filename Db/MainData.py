@@ -1,11 +1,11 @@
-from Clases.Leader import Leader
-from Clases.Player import Player
-from Clases.Trainer import Trainer
-from Clases.Town import Town
-from Clases.Route import Route
-from Clases.Pokemon import Pokemon
-from Clases.Movement import Movement
+from Clases.Leader import Leader as Leader
+from Clases.Trainer import Trainer as Trainer
+from Clases.Town import Town as Town
+from Clases.Route import Route as Route
+from Clases.Pokemon import Pokemon as Pokemon
+from Clases.Movement import Movement as Movement
 import pickle
+
 
 #Moves
 moves = []
@@ -484,8 +484,6 @@ locations =  [route1, route2, red_town, route3, route4, orange_town, route5, rou
 
 trainers = [comp_region1, comp_region2, comp_region3, league_leader]
 
-main_data = [pokemons, locations, trainers]
-
 #Assign moves to pokemons
 for p in pokemons:
            for m in p.movements:
@@ -497,6 +495,13 @@ for p in pokemons:
                                  if move.name == m:
                                             p.learnset[p.learnset.index(m)] = move
 
+
+main_data = [pokemons, locations, trainers]
+
 #Dump info in pickle
-with open("Db\Database.pickle", "wb") as f:
-    pickle.dump(main_data, f)
+                                        
+def dump_info_in_pickle ():
+    with open("Db\Database.pickle", "wb") as f:
+        pickle.dump(main_data, f)
+
+dump_info_in_pickle()
