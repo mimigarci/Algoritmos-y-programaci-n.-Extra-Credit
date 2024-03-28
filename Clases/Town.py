@@ -8,59 +8,72 @@ class Town(Location):
         super().__init__()
         self.name = name
         self.leader = leader
+        self.battle = Battle()
 
     def heal_pokemon (self, player):
         
         for i in player.pokemons:
-            print(f"{player.pokemons.index(i)+1}{i.name}")
-        pokemon_to_heal = input ("Pokemon que desea sanar: ")
-
-        for i in player.pokemons:
-            if pokemon_to_heal == player.pokemons.index(i)+1 and i.HP[0] < i.HP[1]:
-                i.HP = (i.HP[1], i.HP[1])
-            else:
-                continue
+            print(f"{player.pokemons.index(i)+1}. {i.name}")
+        pokemon_to_heal = input ("\nPokemon que desea sanar: ")
         
-    def town_menu (self, player, locations_list):
+        try:
+            player_pokemons = len(player.pokemons)
+            pokemon_to_heal = int (pokemon_to_heal)
 
-        options = ["Sanar a mi pokemon", "Luchar contra el líder", "Avanzar", "Retroceder"]
-        choice = Fun.manage_options(options)
+            for i in player.pokemons:
+                if player_pokemons > 0:
+                    player_pokemons -= 1
+                    if pokemon_to_heal == player.pokemons.index(i)+1:
+                        aux = i.HP[1]
+                        i.HP = (aux, i.HP[1])
+                        print ("\n=== Pokemon sano ===\n")
+                        break
+                    else:
+                        continue
+                else:
+                    break
         
-        if choice == "1":
-            Town.heal_pokemon(self, player)
+        except ValueError:
+            while not pokemon_to_heal.isnumeric() or int(pokemon_to_heal) in range(len(player.pokemons)+1):
+                pokemon_to_heal = input ("\nNúmero inválido. Pokemon que desea sanar: ")
+        
+    def menu (self, player, locations_list):
+
+        while True:
+            options = ["Sanar a mi pokemon", "Luchar contra el líder", "Moverse"]
+            choice = Fun.manage_options(options)
             
-        elif choice == "2":
-            Town.battle_leader()
+            if choice == 1:
+                Town.heal_pokemon(self, player)
+                
+            elif choice == 2:
+                Town.battle_leader(self, player, self.leader, locations_list)
 
-        elif choice == "3":
-            player.location = Town.foward(self, player.location, locations_list)
+            elif choice == 3:
+                player.location.move(player, locations_list) 
 
-        elif choice == "4":
-            player.location = Town.backwards(self, player.location, locations_list)
+            else:
+                print ("\nOpción inválida\n")
 
-        else:
-            print ("\nOpción inválida\n")
+    def battle_leader (self, player, oponent, location_list):
 
-    def battle_oponent (self, player, oponent, location_list):
+        location = player.location
 
-        player = self.player
-        location = self.player.location
-
-        print (f"Tu batalla es contra {oponent.name}")
+        print (f"\nTu batalla es contra {oponent.name}")
 
         if self.battle_cleared == False:
             leader = self.leader
-            self.battle_cleared = Battle.battle_trainer(player, leader)
+            self.battle_cleared = Battle.battle_trainer(self.battle, player, leader)
 
             if self.battle_cleared == True:
                 print ("\nFelicidades, has derrotado a tu oponente! Puedes acceder a la próxima zona.\n")
-                self.move(location, location_list)
+                self.move(player, location_list)
                 player.towns = player.unlocked_towns(location_list)
 
             else:
                 print ("\nLo lamento, no has derrotado a tu oponente. Puedes sanar a tu pokemon en el pueblo más cercano.\n")
             
-                if len(player.unlocked_towns) > 0:
+                if len(player.towns) > 0:
                     print ("Debes ir al pueblo más cercano para sanar a tu pokemon.")
 
                     unlocked_towns = []
