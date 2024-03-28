@@ -210,7 +210,12 @@ class Battle:
                 self.players_turn(active_pokemon, enemy_pokemon, player)
                 
                 if enemy_pokemon.HP[0] <= 0:
-                    break           
+                    if trainer.pokemons[trainer.pokemons.index(enemy_pokemon)+1] in range(len(trainer.pokemons)):
+                        enemy_pokemon = trainer.pokemons[trainer.pokemons.index(enemy_pokemon)+1] 
+                        print (f"El oponente ha cambiado de pokemon a {enemy_pokemon.name}")
+                    else:  
+                        break
+                           
                     
                 self.enemy_turn(active_pokemon, enemy_pokemon)
                 
@@ -228,7 +233,12 @@ class Battle:
                 self.players_turn(active_pokemon, enemy_pokemon, player)
                 
                 if enemy_pokemon.HP[0] <= 0:
-                    break 
+                    if trainer.pokemons[trainer.pokemons.index(enemy_pokemon)+1] in range(len(trainer.pokemons)):
+                        enemy_pokemon = trainer.pokemons[trainer.pokemons.index(enemy_pokemon)+1] 
+                        print (f"El oponente ha cambiado de pokemon a {enemy_pokemon.name}")
+
+                    else:  
+                        break
                 
         for p in trainer.pokemons:
             
@@ -275,6 +285,13 @@ class Battle:
 
         if enemy_pokemon.HP[0] > 0:
             print("\nHas perdido la batalla...")
+            for p in player.pokemons:
+                aux1 = p.atk[1]
+                p.atk = (aux1, p.atk[1])
+
+                aux = p.defense[1]
+                p.defense = (aux, p.defense[1])
+                
             return False
 
         print("\nHas ganado la batalla!")
