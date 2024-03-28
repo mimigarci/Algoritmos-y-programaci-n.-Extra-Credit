@@ -1,6 +1,6 @@
 from Clases.Location import Location
 from Clases.Battle import Battle as Battle
-from Clases.Functions import manage_options
+from Clases.Functions import Funtions as Fun
 
 class Town(Location):
     
@@ -31,7 +31,7 @@ class Town(Location):
     def town_menu (self, player, locations_list):
 
         options = ["Sanar a mi pokemon", "Luchar contra el líder", "Avanzar", "Retroceder"]
-        choice = manage_options(options)
+        choice = Fun.manage_options(options)
         
         if choice == "1":
             Town.heal_pokemon(self, player)
