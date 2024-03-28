@@ -59,18 +59,23 @@ class Town(Location):
 
             else:
                 print ("\nLo lamento, no has derrotado a tu oponente. Puedes sanar a tu pokemon en el pueblo más cercano.\n")
+<<<<<<< Updated upstream
             
                 if len(player.unlocked_towns) > 0:
                     print ("Debes ir al pueblo más cercano para sanar a tu pokemon.")
+=======
+>>>>>>> Stashed changes
 
-                    unlocked_towns = []
-                    for i in player.unlocked_towns:
+                unlocked_towns = player.unlocked_towns (location_list)
+
+                if len(unlocked_towns) > 0:
+                    for i in player.towns:
                         unlocked_towns.append(i.name)
-
+                    
                     selected_town = Fun.manage_options(unlocked_towns)
 
                     for i in location_list:
-                        if location_list.index(i) == selected_town+1:
+                        if location_list.index(i)+1 == selected_town:
                             i.town_menu
                             player.location = i
                         else:

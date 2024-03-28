@@ -202,7 +202,11 @@ class Battle:
                 self.players_turn(active_pokemon, enemy_pokemon, player)
                 
                 if enemy_pokemon.HP[0] <= 0:
-                    break           
+                    
+                    if trainer.pokemons.index(enemy_pokemon)+1 in range(len(trainer.pokemons)):
+                        enemy_pokemon = trainer.pokemons[trainer.pokemons.index(enemy_pokemon)+1]
+                    else:
+                        break           
                     
                 self.enemy_turn(active_pokemon, enemy_pokemon)
                 
@@ -220,7 +224,10 @@ class Battle:
                 self.players_turn(active_pokemon, enemy_pokemon, player)
                 
                 if enemy_pokemon.HP[0] <= 0:
-                    break 
+                    if trainer.pokemons.index(enemy_pokemon)+1 in range(len(trainer.pokemons)):
+                        enemy_pokemon = trainer.pokemons[trainer.pokemons.index(enemy_pokemon)+1]
+                    else:
+                        break   
                 
         for p in trainer.pokemons:
             
@@ -264,12 +271,34 @@ class Battle:
                 if enemy_pokemon.HP[0] <= 0:
                     break
 
+<<<<<<< Updated upstream
         if enemy_pokemon.HP > 0:
             print("Has perdido la batalla")
+=======
+        if enemy_pokemon.HP[0] > 0:
+            print("\nHas perdido la batalla...")
+            for p in player.pokemons:
+                aux1 = p.atk[1]
+                p.atk = (aux1, p.atk[1])
+
+                aux = p.defense[1]
+                p.defense = (aux, p.defense[1])
+>>>>>>> Stashed changes
             return False
 
         print("Has ganado la batalla")
         for p in player.pokemons:
             print(f"{p.name} ha subido de nivel!")
             self.level_up(p)
+<<<<<<< Updated upstream
+=======
+            aux1 = p.atk[1]
+            p.atk = (aux1, p.atk[1])
+
+            aux = p.defense[1]
+            p.defense = (aux, p.defense[1])
+
+        player.pokemons.append(enemy_pokemon)
+        print (f"Has capturado a un {enemy_pokemon.name} salvaje!")
+>>>>>>> Stashed changes
         return True
