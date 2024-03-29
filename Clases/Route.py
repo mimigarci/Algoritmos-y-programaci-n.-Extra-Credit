@@ -33,7 +33,7 @@ class Route(Location):
                     self.battle_cleared = self.battle.battle_pokemon(player, self.wild_pokemon)
 
 
-    def menu (self, player, location_list):
+    def menu (self, player, location_list, pokemons, trainers, file_name):
         
         for i in player.pokemons:
             if i.HP[0] > 0:
@@ -41,7 +41,7 @@ class Route(Location):
             else:
                 continue
 
-        next_location = self.move(player, location_list)
+        next_location = self.move(player, location_list, pokemons, trainers, file_name)
 
         return next_location
                 

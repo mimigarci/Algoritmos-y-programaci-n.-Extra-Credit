@@ -1,9 +1,5 @@
-from Clases.Leader import Leader
 from Clases.Player import Player
-from Clases.Trainer import Trainer
 from Clases.Town import Town
-from Clases.Route import Route
-from Clases.Pokemon import Pokemon
 from Clases.Battle import Battle
 from Clases.Functions import Functions as Fun
 import pickle
@@ -26,11 +22,8 @@ class App:
             self.pokemons = info[0]
             self.locations = info[1]
             self.trainers = info[2]
-
-    #Aparece al entrar a una ciudad
-    def save_data(self):
-        pass
-    
+            self.player = info[3]
+       
     def menu (self):
         os.system('cls')
         while True:
@@ -42,17 +35,16 @@ class App:
                 
                 saves = ["Guardado 1", "Guardado 2", "Guardado 3"]
                 select = Fun.manage_options(saves)
-                
                 App.read_data(self, "Db\Database.pickle")
 
                 if select == 1:
-                    App.start_game(self, "Db\Save1.pickle")
+                    App.register_user(self, self.locations, self.pokemons, self.trainers, "Db\Save1.pickle")
                     break
                 elif select == 2:
-                    App.start_game(self, "Db\Save2.pickle")
+                    App.register_user(self, self.locations, self.pokemons, self.trainers, "Db\Save2.pickle")
                     break
                 elif select == 3:
-                    App.start_game(self, "Db\Save3.pickle")
+                    App.register_user(self, self.locations, self.pokemons, self.trainers, "Db\Save3.pickle")
                     break
                 else:
                     pass
@@ -63,13 +55,16 @@ class App:
                 select = Fun.manage_options(saves)
                 
                 if select == 1:
-                    App.start_game(self, "Db\Save1.pickle")
+                    App.read_data(self,"Db\Save1.pickle")
+                    App.start_game(self, self.player, self.locations, self.pokemons, self.trainers, "Db\Save1.pickle")
                     break
                 elif select == 2:
-                    App.start_game(self, "Db\Save2.pickle")
+                    App.read_data(self,"Db\Save2.pickle")
+                    App.start_game(self, self.player, self.locations, self.pokemons, self.trainers, "Db\Save2.pickle")
                     break
                 elif select == 3:
-                    App.start_game(self, "Db\Save3.pickle")
+                    App.read_data(self,"Db\Save3.pickle")
+                    App.start_game(self, self.player, self.locations, self.pokemons, self.trainers, "Db\Save3.pickle")
                     break
                 else:
                     print ("\nOpción inválida\n")
@@ -81,8 +76,31 @@ class App:
                 print ("\nOpción inválida\n")
 
 
-    def start_game(self, file_name):
+    def start_game(self, player, locations, pokemons, trainers, file_name):
+        print ("\n...Comienza la aventura! ")
+        player.location.menu(player, locations, pokemons, trainers, file_name)
 
+
+    def user_select_pokemon (self, pokemon1, pokemon2, pokemon3):
+        while True:
+            starter_pokemon = input (f"""Seleccione un pokemon:
+                1.{pokemon1.name}
+                2.{pokemon2.name}
+                3.{pokemon3.name}
+                
+                    ---> """)
+
+            if starter_pokemon == "1":
+                return pokemon1, pokemon2
+            elif starter_pokemon == "2":
+                return pokemon2, pokemon3
+            elif starter_pokemon == "3":
+                return pokemon3, pokemon1
+            else:
+                print ("\nOpción inválida\n")
+
+
+    def register_user (self, locations, pokemons, trainers, file_name):
         while True:
             print ("Bienvenido a tu aventura pokemon! ")
 
@@ -107,21 +125,10 @@ class App:
                 player = Player(name, age, region, partner)
                 player.pokemons.append(selected_pokemon1)
                 player.location = self.locations[0]
-
-                print ("\n...Comienza la aventura! ")
+                self.player = player
 
                 #Primera batalla (Contra el compañero)
-                while True:
-                    partner = player.partner
-
-                    if Battle.battle_trainer(self.battle, player, player.partner) == True:
-                        Town.heal_pokemon(Town, player)
-                        player.location.menu(player, self.locations)
-                        break
-                    else:
-                        print ("\nNo has derrotado a tu oponente, vamos a sanar a tu pokemon para que lo vuelvas a intentar!")
-                        Town.heal_pokemon(Town, player)
-
+                App.first_battle(self, player, locations, pokemons, trainers, file_name)
                 break
 
 
@@ -139,22 +146,12 @@ class App:
                 player = Player(name, age, region, partner)
                 player.pokemons.append(selected_pokemon1)
                 player.location = self.locations[0]
-
-                print ("\n...Comienza la aventura! ")
+                self.player = player
 
                 #Primera batalla (Contra el compañero)
-                while True:
-                    partner = player.partner
-
-                    if Battle.battle_trainer(Battle, player, player.partner) == True:
-                        player.location.menu()
-                        break
-                    else:
-                        print ("\nNo has derrotado a tu oponente, vamos a sanar a tu pokemon para que lo vuelvas a intentar!")
-                        Town.heal_pokemon(Town, player)
-
+                App.first_battle(self, player, locations, pokemons, trainers, file_name)
                 break
-            
+                    
 
             elif region == 3:
                 partner = self.trainers[2]
@@ -170,41 +167,22 @@ class App:
                 player = Player(name, age, region, partner)
                 player.pokemons.append(selected_pokemon1)
                 player.location = self.locations[0]
-
-                print ("\n...Comienza la aventura! ")
-                player = self.player
+                self.player = player
 
                 #Primera batalla (Contra el compañero)
-                while True:
-                    partner = player.partner
+                App.first_battle(self, player, locations, pokemons, trainers, file_name)
 
-                    if Battle.battle_trainer(Battle, player, player.partner) == True:
-                        player.location.menu()
-                        break
-                    else:
-                        print ("\nNo has derrotado a tu oponente, vamos a sanar a tu pokemon para que lo vuelvas a intentar!")
-                        Town.heal_pokemon(Town, player)
-
-                break
-            else:
-                print ("\nOpción inválida\n")
-
-
-
-    def user_select_pokemon (self, pokemon1, pokemon2, pokemon3):
-        while True:
-            starter_pokemon = input (f"""Seleccione un pokemon:
-                1.{pokemon1.name}
-                2.{pokemon2.name}
-                3.{pokemon3.name}
+            
                 
-                    ---> """)
 
-            if starter_pokemon == "1":
-                return pokemon1, pokemon2
-            elif starter_pokemon == "2":
-                return pokemon2, pokemon3
-            elif starter_pokemon == "3":
-                return pokemon3, pokemon1
+    def first_battle (self, player, locations, pokemons, trainers, file_name):
+        while True:
+            battle = Battle.battle_trainer(self.battle, player, player.partner)
+            
+            if battle == True:
+                Town.heal_pokemon(Town, player)
+                App.start_game(self, player, locations, pokemons, trainers, file_name)
             else:
-                print ("\nOpción inválida\n")
+                print ("\nNo has derrotado a tu oponente, vamos a sanar a tu pokemon para que lo vuelvas a intentar!")
+                Town.heal_pokemon(Town, player)
+            

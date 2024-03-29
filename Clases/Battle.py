@@ -1,5 +1,6 @@
 import random
 from Clases.Functions import Functions as Fun
+import sys
 
 class Battle:
     def __init__(self):
@@ -58,6 +59,7 @@ class Battle:
 
 
     def players_turn(self, active_pokemon, enemy_pokemon, player):
+        
         p_def = active_pokemon.defense[0]
         p_atk = active_pokemon.atk[0]
         e_hp = enemy_pokemon.HP[0]
@@ -111,18 +113,22 @@ class Battle:
         else:
             active_pokemon = self.change_pokemon(active_pokemon, player)
 
-        p_def = active_pokemon.defense[0]
-        p_atk = active_pokemon.atk[0]
-        atk = (p_atk, active_pokemon.atk[1])
-        defs = (p_def, active_pokemon.defense[1])
-        active_pokemon.atk = atk
-        active_pokemon.defense = defs
-        hp = (e_hp, enemy_pokemon.HP[1])
-        atk = (e_atk, enemy_pokemon.atk[1])
-        defs = (e_def, enemy_pokemon.defense[1])
-        enemy_pokemon.HP = hp
-        enemy_pokemon.atk = atk
-        enemy_pokemon.defense = defs
+        if type(active_pokemon) == None:
+            print ("\nNo tienes pokemones activos!")
+            return
+        else:
+            p_def = active_pokemon.defense[0]
+            p_atk = active_pokemon.atk[0]
+            atk = (p_atk, active_pokemon.atk[1])
+            defs = (p_def, active_pokemon.defense[1])
+            active_pokemon.atk = atk
+            active_pokemon.defense = defs
+            hp = (e_hp, enemy_pokemon.HP[1])
+            atk = (e_atk, enemy_pokemon.atk[1])
+            defs = (e_def, enemy_pokemon.defense[1])
+            enemy_pokemon.HP = hp
+            enemy_pokemon.atk = atk
+            enemy_pokemon.defense = defs
 
         return active_pokemon
 
@@ -201,7 +207,10 @@ class Battle:
         
         if pokemon.level > 1 and not pokemon.level%2==0:
             pokemon.movements.append(pokemon.learnset[0])
-            print(f"{pokemon.name} ha aprendido {pokemon.learnset[0].name}!\n")
+            if pokemon.learnset[0] != "Splash":
+                print(f"{pokemon.name} ha aprendido {pokemon.learnset[0].name}!\n")
+            else:
+                print (f"{pokemon.name} ha aprendido Splash! (this is useless! (no))")
             pokemon.learnset.pop(pokemon.learnset.index(pokemon.learnset[0]))
 
     def battle_trainer(self, player, trainer):
@@ -254,7 +263,6 @@ class Battle:
                 break
                 
         for p in trainer.pokemons:
-            
             if p.HP[0] > 0:
                 print("\nHas perdido la batalla...")
                 return False
@@ -264,7 +272,19 @@ class Battle:
         for p in player.pokemons:
             print(f"\n{p.name} ha subido de nivel!")
             self.level_up(p)
-        return True
+
+        if trainer.name != "Ash Ketchum":
+            print("\nHas ganado la batalla!")
+            return True
+        else:
+            
+            print ("Has ganado el juego!")
+            print ("Tu equipo ganador: ")
+            for i in player.pokemons:
+                print (f"👏 {i.name} 👏")
+            
+            sys.exit()
+            
 
     def battle_pokemon(self, player, enemy_pokemon):
         active_pokemon = player.pokemons[0]
@@ -289,14 +309,14 @@ class Battle:
                     self.enemy_turn(active_pokemon, enemy_pokemon)
                     
                     if active_pokemon.HP[0] <= 0:
-                        self.change_pokemon(active_pokemon, player)
+                        active_pokemon = self.change_pokemon(active_pokemon, player)
                         break           
                         
                 else:
                     self.enemy_turn(active_pokemon, enemy_pokemon)
                     
                     if active_pokemon.HP[0] <= 0:
-                        self.change_pokemon(active_pokemon, player)
+                        active_pokemon = self.change_pokemon(active_pokemon, player)
                         break 
                         
                     active_pokemon = self.players_turn(active_pokemon, enemy_pokemon, player)

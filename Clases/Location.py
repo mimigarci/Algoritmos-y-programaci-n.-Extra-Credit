@@ -8,7 +8,7 @@ class Location (Functions):
 
 
 
-    def move (self, player, location_list):
+    def move (self, player, location_list, pokemons, trainers, file_name):
         
         while True:
             option = input ("""
@@ -18,14 +18,19 @@ class Location (Functions):
     ---> """)
             
             if option == "1":
-                new_location = Location.foward(self, player, location_list)
-                print (f"\nHas llegado a {new_location.name}\n")
-                new_location.menu(player, location_list)
-                break
+                
+                if self.battle_cleared == False:
+                    print ("\nDebes derrotar al líder antes de salir de la ciudad!\n")
+                    break
+                else:
+                    new_location = Location.foward(self, player, location_list)
+                    print (f"\nHas llegado a {new_location.name}\n")
+                    new_location.menu(player, location_list, pokemons, trainers, file_name)
+                    break
             elif option == "2":
                 new_location = Location.backwards(self, player, location_list)
                 print (f"\nHas llegado a {new_location.name}\n")
-                new_location.menu(player, location_list)
+                new_location.menu(player, location_list, pokemons, trainers, file_name)
                 break
             else:
                 print ("\nOpción inválida\n")
@@ -53,11 +58,11 @@ class Location (Functions):
         location = locations_list.index(player_location)
         backwards = location -1
 
-        try:
-            new_location = locations_list[backwards]
-            player.location = new_location
-            
-        except IndexError:
-            print ("No puedes retroceder más.")
+        if backwards == -1:
+            backwards = 0
+            print ("\nNo puedes retroceder más!\n")
+        
+        new_location = locations_list[backwards]
+        player.location = new_location
 
         return new_location

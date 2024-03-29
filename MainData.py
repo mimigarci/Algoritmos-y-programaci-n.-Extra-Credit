@@ -482,8 +482,8 @@ for p in pokemons:
                                  if move.name == m:
                                             p.learnset[p.learnset.index(m)] = move
 
-
-main_data = [pokemons, locations, trainers]
+player = ""
+main_data = [pokemons, locations, trainers, player]
 
 #Dump info in pickle
                                         

@@ -1,6 +1,7 @@
 from Clases.Location import Location
 from Clases.Battle import Battle as Battle
 from Clases.Functions import Functions as Fun
+import pickle
 
 class Town(Location):
     
@@ -25,8 +26,8 @@ class Town(Location):
                 if player_pokemons > 0:
                     player_pokemons -= 1
                     if pokemon_to_heal == player.pokemons.index(i)+1:
-                        aux = i.HP[1]
-                        i.HP = (aux, i.HP[1])
+                      
+                        i.HP = (i.HP[1], i.HP[1])
                         print ("\n=== Pokemon sano ===\n")
                         break
                     else:
@@ -38,41 +39,48 @@ class Town(Location):
             pokemon_to_heal = input ("\nNúmero inválido. Pokemon que desea sanar: ")
             
         
-    def menu (self, player, locations_list):
+    def menu (self, player, locations_list, pokemons, trainers, file_name):
 
         while True:
-            options = ["Sanar a mi pokemon", "Luchar contra el líder", "Moverse"]
+            options = ["Sanar a mi pokemon", "Luchar contra el líder", "Moverse", "Guardar partida", "Salir"]
             choice = Fun.manage_options(options)
             
             if choice == 1:
                 Town.heal_pokemon(self, player)
                 
             elif choice == 2:
-                Town.battle_leader(self, player, self.leader, locations_list)
+                Town.battle_leader(self, player, self.leader, locations_list, pokemons, trainers, file_name)
 
             elif choice == 3:
                 if self.battle_cleared == False:
                     print ("\nDebes derrotar al líder antes de salir de la ciudad!\n")
                 else:
-                    player.location.move(player, locations_list) 
+                    player.location.move(player, locations_list, pokemons, trainers, file_name) 
+
+            elif choice == 4:
+                Town.save_data(self, file_name, locations_list, player, pokemons, trainers)
+                print ("--- Partida guardada correctamente ---\n")
+
+            elif choice == 5:
+                print ("\nCerrando programa...")
+                break
 
             else:
                 print ("\nOpción inválida\n")
 
-    def battle_leader (self, player, oponent, location_list):
-
-        location = player.location
+    def battle_leader (self, player, oponent, location_list, pokemons, trainers, file_name):
 
         print (f"\nTu batalla es contra {oponent.name}")
 
         if self.battle_cleared == False:
             leader = self.leader
+
             self.battle_cleared = Battle.battle_trainer(self.battle, player, leader)
             player.towns = player.unlocked_towns(location_list)
 
             if self.battle_cleared == True:
                 print ("\nFelicidades, has derrotado a tu oponente! Puedes acceder a la próxima zona.\n")
-                self.move(player, location_list)
+                self.move(player, location_list, pokemons, trainers, file_name)
 
             else:
                 print ("\nLo lamento, no has derrotado a tu oponente. Puedes sanar a tu pokemon en el pueblo más cercano.\n")
@@ -98,6 +106,14 @@ class Town(Location):
 
         else:
             print("Ya has ganado esta batalla!")
+
+    def save_data(self, file_name, locations, player, pokemons, trainers):
+        with open(file_name, "wb") as save:
+
+            data = [pokemons, locations, trainers, player]
+            pickle.dump(data, save)
+        
+            
             
 
 
