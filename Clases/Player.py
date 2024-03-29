@@ -14,7 +14,7 @@ class Player(Trainer):
 
     def unlocked_towns (self, location_list):
         unlocked_towns = []
-        registered_locations = len(self.locations)
+        registered_locations = len(location_list)
 
         if registered_locations > 0:
             for i in location_list:

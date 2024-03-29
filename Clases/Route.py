@@ -21,7 +21,7 @@ class Route(Location):
                 if aux in range(3):
                     print (f"\nUn pokemon salvaje! {self.wild_pokemon.name} se ha atravesado en tu camino! ")
                     self.battle_cleared = self.battle.battle_pokemon(player, self.wild_pokemon)
-            elif self.numer in range(9, 13):
+            elif self.number in range(9, 13):
                 aux = random.randrange(2)
                 if aux == 0:
                     print (f"\nUn pokemon salvaje! {self.wild_pokemon.name} se ha atravesado en tu camino! ")

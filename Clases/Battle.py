@@ -51,6 +51,8 @@ class Battle:
                             print("Ese es tu pokemon activo!")
                         else:
                             active_pokemon = p
+                            print (f"Has cambiado tu pokemon a {active_pokemon.name}")
+                            return active_pokemon
         else:
             print ("\nNo puedes cambiar de pokemon, solo tienes uno!")
 
@@ -105,8 +107,9 @@ class Battle:
                             e_hp -= (e_hp/2)
                         else:
                             print("\nParece que no hizo nada...")
+                            
         else:
-            self.change_pokemon(active_pokemon, player)
+            active_pokemon = self.change_pokemon(active_pokemon, player)
 
         p_def = active_pokemon.defense[0]
         p_atk = active_pokemon.atk[0]
@@ -120,6 +123,8 @@ class Battle:
         enemy_pokemon.HP = hp
         enemy_pokemon.atk = atk
         enemy_pokemon.defense = defs
+
+        return active_pokemon
 
     def enemy_turn(self, active_pokemon, enemy_pokemon):
         p_hp = active_pokemon.HP[0]
@@ -203,42 +208,50 @@ class Battle:
         active_pokemon = player.pokemons[0]
         enemy_pokemon = trainer.pokemons[0]
 
+        if active_pokemon.HP[0] <= 0:
+            for i in player.pokemons:
+                if i.HP[0] > 0:
+                    active_pokemon = i
+                else:
+                    active_pokemon = active_pokemon
+                    break
+        
         while True:
             turn = random.randrange(0,2)
             
-            if turn == 0:
-                self.players_turn(active_pokemon, enemy_pokemon, player)
-                
-                if enemy_pokemon.HP[0] <= 0:
-                    if trainer.pokemons[trainer.pokemons.index(enemy_pokemon)+1] in range(len(trainer.pokemons)):
-                        enemy_pokemon = trainer.pokemons[trainer.pokemons.index(enemy_pokemon)+1] 
-                        print (f"El oponente ha cambiado de pokemon a {enemy_pokemon.name}")
-                    else:  
-                        break
-                           
+            if active_pokemon.HP[0] > 0:
+                if turn == 0:
+                    active_pokemon = self.players_turn(active_pokemon, enemy_pokemon, player)
                     
-                self.enemy_turn(active_pokemon, enemy_pokemon)
-                
-                if active_pokemon.HP[0] <= 0:
-                    self.change_pokemon(active_pokemon, player)
-                    break           
+                    if enemy_pokemon.HP[0] <= 0:
+                        if trainer.pokemons.index(enemy_pokemon)+1 in range(len(trainer.pokemons)):
+                            enemy_pokemon = trainer.pokemons[trainer.pokemons.index(enemy_pokemon)+1] 
+                            print (f"\nEl oponente ha cambiado de pokemon a {enemy_pokemon.name}")
+                        else:  
+                            break
+                            
+                    self.enemy_turn(active_pokemon, enemy_pokemon)
                     
+                    if active_pokemon.HP[0] <= 0:
+                        active_pokemon = self.change_pokemon(active_pokemon, player)
+   
+                else:
+                    self.enemy_turn(active_pokemon, enemy_pokemon)
+                    
+                    if active_pokemon.HP[0] <= 0:
+                        active_pokemon = self.change_pokemon(active_pokemon, player)
+                        
+                    active_pokemon = self.players_turn(active_pokemon, enemy_pokemon, player)
+                    
+                    if enemy_pokemon.HP[0] <= 0:
+                        if trainer.pokemons.index(enemy_pokemon)+1 in range(len(trainer.pokemons)):
+                            enemy_pokemon = trainer.pokemons[trainer.pokemons.index(enemy_pokemon)+1] 
+                            print (f"El oponente ha cambiado de pokemon a {enemy_pokemon.name}")
+                        else:  
+                            break
             else:
-                self.enemy_turn(active_pokemon, enemy_pokemon)
-                
-                if active_pokemon.HP[0] <= 0:
-                    self.change_pokemon(active_pokemon, player)
-                    break 
-                    
-                self.players_turn(active_pokemon, enemy_pokemon, player)
-                
-                if enemy_pokemon.HP[0] <= 0:
-                    if trainer.pokemons[trainer.pokemons.index(enemy_pokemon)+1] in range(len(trainer.pokemons)):
-                        enemy_pokemon = trainer.pokemons[trainer.pokemons.index(enemy_pokemon)+1] 
-                        print (f"El oponente ha cambiado de pokemon a {enemy_pokemon.name}")
-
-                    else:  
-                        break
+                print ("Todos tus pokemon han sido debilitados!")
+                break
                 
         for p in trainer.pokemons:
             
@@ -256,32 +269,43 @@ class Battle:
     def battle_pokemon(self, player, enemy_pokemon):
         active_pokemon = player.pokemons[0]
         
+        if active_pokemon.HP[0] <= 0:
+            for i in player.pokemons:
+                if i.HP[0] > 0:
+                    active_pokemon = i
+                else:
+                    active_pokemon = active_pokemon
+                    break
+                
         while True:
             turn = random.randrange(0,2)
-            
-            if turn == 0:
-                self.players_turn(active_pokemon, enemy_pokemon, player)
-                
-                if enemy_pokemon.HP[0] <= 0:
-                    break           
+            if active_pokemon.HP[0] > 0:
+                if turn == 0:
+                    active_pokemon = self.players_turn(active_pokemon, enemy_pokemon, player)
                     
-                self.enemy_turn(active_pokemon, enemy_pokemon)
-                
-                if active_pokemon.HP[0] <= 0:
-                    self.change_pokemon(active_pokemon, player)
-                    break           
+                    if enemy_pokemon.HP[0] <= 0:
+                        break           
+                        
+                    self.enemy_turn(active_pokemon, enemy_pokemon)
                     
+                    if active_pokemon.HP[0] <= 0:
+                        self.change_pokemon(active_pokemon, player)
+                        break           
+                        
+                else:
+                    self.enemy_turn(active_pokemon, enemy_pokemon)
+                    
+                    if active_pokemon.HP[0] <= 0:
+                        self.change_pokemon(active_pokemon, player)
+                        break 
+                        
+                    active_pokemon = self.players_turn(active_pokemon, enemy_pokemon, player)
+                    
+                    if enemy_pokemon.HP[0] <= 0:
+                        break
             else:
-                self.enemy_turn(active_pokemon, enemy_pokemon)
-                
-                if active_pokemon.HP[0] <= 0:
-                    self.change_pokemon(active_pokemon, player)
-                    break 
-                    
-                self.players_turn(active_pokemon, enemy_pokemon, player)
-                
-                if enemy_pokemon.HP[0] <= 0:
-                    break
+                print ("Todos tus pokemon han sido debilitados!")
+                break
 
         if enemy_pokemon.HP[0] > 0:
             print("\nHas perdido la batalla...")
@@ -303,5 +327,18 @@ class Battle:
 
             aux = p.defense[1]
             p.defense = (aux, p.defense[1])
+
+        while True:
+            choice = input (f"Deseas capturar al {enemy_pokemon.name} salvaje? Y/N: ")
+
+            if choice == "Y" or choice == "y":
+                player.pokemons.append(enemy_pokemon)
+                print (f"\nHas capturado a {enemy_pokemon.name} salvaje!")
+                break
+            elif choice == "N" or choice == "n":
+                print ("...Continuando aventura\n")
+                break
+            else:
+                print ("\nOpción inválida\n")
 
         return True

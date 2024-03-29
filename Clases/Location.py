@@ -55,7 +55,7 @@ class Location (Functions):
 
         try:
             new_location = locations_list[backwards]
-            player_location.location = new_location
+            player.location = new_location
             
         except IndexError:
             print ("No puedes retroceder más.")
