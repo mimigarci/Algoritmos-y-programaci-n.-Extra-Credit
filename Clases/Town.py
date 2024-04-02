@@ -2,6 +2,7 @@ from Clases.Location import Location
 from Clases.Battle import Battle as Battle
 from Clases.Functions import Functions as Fun
 import pickle
+import sys
 
 class Town(Location):
     
@@ -63,6 +64,7 @@ class Town(Location):
 
             elif choice == 5:
                 print ("\nCerrando programa...")
+                sys.exit()
                 break
 
             else:
